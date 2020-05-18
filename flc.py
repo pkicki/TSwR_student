@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy import pi
 from scipy.integrate import odeint
 
 from controllers.dummy_controller import DummyController
@@ -26,7 +27,7 @@ At the end implement Point2point trajectory generator to move your manipulator t
 """
 # traj_gen = ConstantTorque(np.array([0., 1.0])[:, np.newaxis])
 traj_gen = Sinusoidal(np.array([0., 1.]), np.array([2., 2.]), np.array([0., 0.]))
-# traj_gen = Point2point(np.array([1., 1.]), np.array([0., 0.]))
+# traj_gen = Point2point(np.array([0., 0.]), np.array([pi/4, pi/6]))
 
 
 ctrl = []

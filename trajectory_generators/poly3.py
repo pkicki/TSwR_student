@@ -2,12 +2,18 @@ import numpy as np
 from trajectory_generators.trajectory_generator import TrajectoryGenerator
 
 
-class Point2point(TrajectoryGenerator):
-    def __init__(self, desired_q, desired_q_dot):
-        self.q_0 = np.zeros_like(desired_q)
-        self.q_dot_0 = np.zeros_like(desired_q_dot)
+class Poly3(TrajectoryGenerator):
+    def __init__(self, start_q, desired_q):
+        self.q_0 = start_q
         self.q_k = desired_q
-        self.q_dot_k = desired_q_dot
+        """
+        Please implement the formulas for a_0 till a_3 using self.q_0 and self.q_k
+        Assume that the velocities at start and end are zero.
+        """
+        self.a_0 = None
+        self.a_1 = None
+        self.a_2 = None
+        self.a_3 = None
 
     def generate(self, t):
         """
@@ -17,7 +23,3 @@ class Point2point(TrajectoryGenerator):
         Use following formula for the polynomial from the instruction.
         """
         return NotImplementedError()
-
-    def set_initial_state(self, q, q_dot):
-        self.q_0 = q
-        self.q_dot_0 = q_dot
