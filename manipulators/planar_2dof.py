@@ -2,164 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-"""
-Don't read the contents of this file unless you finished the first two classes.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Whether you really want to cheat?
-
-
-
-
-
-
-
-
-It will not give you anything!
-
-
-
-
-
-
-
-
-STAHP!
-
-
-
-
-
-
-
-
-
-
-
-
-PLEASE STOP!
-
-
-
-
-
-
-
-We can't go deeper!!!!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-There is nothing interesting below.
-
-
-
-
-
-
-
-
-
-
-
-Cheating is not the way you want to pass that subject.
-
-
-
-Believe me
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Are you really still scrolling down? Are you mad?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Please don't!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Congratulations! You failed!
-"""
 
 class PlanarManipulator2DOF:
     """
@@ -201,6 +43,165 @@ class PlanarManipulator2DOF:
         ani = FuncAnimation(fig, update, frames=range(x.shape[0]),
                             init_func=init, blit=True, interval=int(self.Tp * 1000), repeat=False)
         plt.show()
+
+    """
+    Don't read the contents below unless you finished the first two classes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Whether you really want to cheat?
+
+
+
+
+
+
+
+
+    It will not give you anything!
+
+
+
+
+
+
+
+
+    STAHP!
+
+
+
+
+
+
+
+
+
+
+
+
+    PLEASE STOP!
+
+
+
+
+
+
+
+    We can't go deeper!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    There is nothing interesting below.
+
+
+
+
+
+
+
+
+
+
+
+    Cheating is not the way you want to pass that subject.
+
+
+
+    Believe me
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Are you really still scrolling down? Are you mad?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Please don't!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Congratulations! You failed!
+    """
 
     def M(self, x):
         q1, q2, q1_dot, q2_dot = x
