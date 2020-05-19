@@ -20,15 +20,12 @@ t = np.linspace(start, end, int((end - start) / Tp))
 manipulator = MMPlanarManipulator2DOF(Tp)
 
 
-"""
-Switch to FeedbackLinearizationController as soon as you implement it
-"""
+# TODO: Switch to MMAC as soon as you implement it
 #controller = MMAController(Tp)
 controller = DummyController(Tp)
 
 """
 Here you have some trajectory generators. You can use them to check your implementations.
-At the end implement Point2point trajectory generator to move your manipulator to some desired state.
 """
 # traj_gen = ConstantTorque(np.array([0., 1.0])[:, np.newaxis])
 traj_gen = Sinusoidal(np.array([0., 1.]), np.array([2., 2.]), np.array([0., 0.]))

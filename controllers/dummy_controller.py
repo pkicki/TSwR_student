@@ -9,3 +9,6 @@ class DummyController(Controller):
 
     def calculate_control(self, x, v):
         return v
+
+    def choose_model(self, x, u, x_dot):
+        pass
