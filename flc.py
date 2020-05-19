@@ -55,6 +55,6 @@ manipulator.plot(x)
 You can add here some plots of the state 'x' (consists of q and q_dot), controls 'ctrl', desired trajectory 'Q_d'
 with respect to time 'T' to analyze what is going on in the system
 """
-plt.plot(T, x[:, 1], 'r')
+plt.plot(t, x[:, 1], 'r')
 plt.plot(T, np.stack(Q_d, 0)[:, 1], 'b')
 plt.show()
