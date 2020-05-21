@@ -11,10 +11,10 @@ class Poly3(TrajectoryGenerator):
         Please implement the formulas for a_0 till a_3 using self.q_0 and self.q_k
         Assume that the velocities at start and end are zero.
         """
-        self.a_0 = None
+        self.a_0 = self.q_0
         self.a_1 = None
         self.a_2 = None
-        self.a_3 = None
+        self.a_3 = self.q_k - self.q_0
 
     def generate(self, t):
         """
