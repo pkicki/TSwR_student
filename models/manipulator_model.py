@@ -22,7 +22,7 @@ class ManiuplatorModel:
     def M(self, x):
         q1, q2, q1_dot, q2_dot = x
 
-        M = np.array([[0,0],[0,0]])
+        M = np.array([[0,0],[0,0]], float)
         M[0][0] = self.alpha+2*self.beta*np.cos(q2)
         M[0][1] = self.gamma+self.beta*np.cos(q2)
         M[1][0] = self.gamma+self.beta*np.cos(q2)
@@ -33,7 +33,7 @@ class ManiuplatorModel:
     def C(self, x):
         q1, q2, q1_dot, q2_dot = x
 
-        C = np.array([[0,0],[0,0]])
+        C = np.array([[0,0],[0,0]], float)
         C[0][0] = -self.beta*np.sin(q2)*q2_dot
         C[0][1] = -self.beta*np.sin(q2)*(q1_dot+q2_dot)
         C[1][0] = self.beta*np.sin(q2)*q1_dot
