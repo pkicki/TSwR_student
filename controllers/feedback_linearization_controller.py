@@ -13,6 +13,7 @@ class FeedbackLinearizationController(Controller):
         robot state x and desired control v.
         """
         q_dot = x[2:, np.newaxis]
-        tau = self.model.M(x) * v + self.model.C(x) * q_dot
+        #tau = self.model.M(x) * v + self.model.C(x) * q_dot
+        tau = np.dot(self.model.M(x), v) + np.dot(self.model.C(x), q_dot)
 
         return tau
