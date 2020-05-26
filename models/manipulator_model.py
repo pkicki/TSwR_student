@@ -16,7 +16,7 @@ class ManiuplatorModel:
         self.r3 = 0.0
         self.I_3 = 2. / 5 * self.m3 * self.r3 ** 2
         self.alpha = self.I_1 + self.I_2 + self.m1 * self.r1 ** 2 + self.m2 * (self.l1 ** 2 + self.r2 ** 2) +\
-                self.I_3 + self.m3 * (self.l1 ** 2 + self.l2 ** 2)
+                     self.I_3 + self.m3 * (self.l1 ** 2 + self.l2 ** 2)
         self.beta = self.m2 * self.l1 * self.r2 + self.m3 * self.l1 * self.l2
         self.gamma = self.I_2 + self.m2 * self.r2 ** 2 + self.I_3 + self.m3 * self.l2 ** 2
 

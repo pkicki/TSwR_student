@@ -12,8 +12,8 @@ class Poly3(TrajectoryGenerator):
         Assume that the velocities at start and end are zero.
         """
         self.a_0 = self.q_0
-        self.a_1 = 3*self.a_0
-        self.a_2 = 3*self.a_3
+        self.a_1 = 3*self.q_0
+        self.a_2 = 3*self.q_k
         self.a_3 = self.q_k
 
     def generate(self, t):
