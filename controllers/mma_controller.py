@@ -1,7 +1,5 @@
 import numpy as np
-from models.free_model import FreeModel
 from .controller import Controller
-from models.ideal_model import IdealModel
 
 
 class MMAController(Controller):
@@ -16,7 +14,7 @@ class MMAController(Controller):
         pass
 
     def calculate_control(self, x, desired_q_ddot):
-        v = desired_q_ddot
+        v = desired_q_ddot  # TODO: Add Feedback
         q_dot = x[2:, np.newaxis]
         M = self.models[self.i].M(x)
         return M @ (v + np.linalg.inv(M) @ self.models[self.i].C(x) @ q_dot)
