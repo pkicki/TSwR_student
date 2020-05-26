@@ -27,4 +27,4 @@ class Poly3(TrajectoryGenerator):
         q = self.a_3 * t**3 + self.a_2 * t**2 * (1 - t) + self.a_1 * t * (1 - t)**2 + self.a_0 * (1 - t)**3
         q_dot = None
         q_ddot = None
-        return q, q_dot, q_ddot
+        return q, q_dot / self.T, q_ddot / self.T**2
