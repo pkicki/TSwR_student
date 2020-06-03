@@ -66,7 +66,7 @@ def system(x_and_eso, t):
 
 q_d, q_d_dot, q_d_ddot = traj_gen.generate(0.)
 x = odeint(system, [*q_d, *q_d_dot, 0., 0., 0., 0., 0., 0.], t, hmax=1e-3)
-manipulator.plot(x)
+manipulator.plot(x[:, :4])
 
 """
 You can add here some plots of the state 'x' (consists of q and q_dot), controls 'ctrl', desired trajectory 'Q_d'
