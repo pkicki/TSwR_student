@@ -45,7 +45,7 @@ class PlanarManipulator2DOF:
         plt.show()
 
     """
-    Don't read the contents below unless you finished the first two classes.
+    Don't read the content below unless you finished the first two classes.
 
 
 
