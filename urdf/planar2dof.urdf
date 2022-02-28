@@ -1,0 +1,102 @@
+<robot name="planar2dof">
+  <link name="world" />
+
+  <joint name="planar2dof/base_joint" type="fixed">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    <parent link="world" />
+    <child link="planar2dof/base_link" />
+  </joint>
+
+  <link name="planar2dof/base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+      <mass value="1" />
+      <inertia ixx="0.01474" ixy="0.00000" ixz="0.00000" iyy="0.01474" iyz="0.00000" izz="0.00281" />
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.075" length="0.4" />
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint name="planar2dof/joint_1" type="revolute">
+    <axis xyz="0 0 1" />
+    <parent link="planar2dof/base_link" />
+    <child link="planar2dof/link_1" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <limit effort="40.0" lower="-3.1415" upper="3.1415" velocity="2.35619449019" />
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="planar2dof/link_1">
+    <inertial>
+      <origin rpy="0 1.570796326790 0" xyz="0.25 0.0 0.0" />
+      <mass value="3" />
+      <inertia ixx="0.06370" ixy="0.00000" ixz="0.00000" iyy="0.06370" iyz="0.00000" izz="0.00240" />
+    </inertial>
+    <visual>
+      <origin rpy="0 1.57079632679 0" xyz="0.25 0.0 0.0" />
+      <geometry>
+        <cylinder radius="0.04" length="0.5" />
+      </geometry>
+      <material name="red">
+        <color rgba="0.8 0 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint name="planar2dof/joint_2" type="revolute">
+    <axis xyz="0 0 1" />
+    <parent link="planar2dof/link_1" />
+    <child link="planar2dof/link_2" />
+    <origin xyz="0.5 0 0" />
+    <limit effort="15.0" lower="-2.5" upper="2.5" velocity="2.35619449019" />
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="planar2dof/link_2">
+    <inertial>
+      <origin rpy="0 1.570796326790 0" xyz="0.2 0.0 0.0" />
+      <mass value="2.4" />
+      <inertia ixx="0.03296" ixy="0.00000" ixz="0.00000" iyy="0.03296" iyz="0.00000" izz="0.00192" />
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.4" />
+      </geometry>
+      <origin rpy="0.0 1.57079632679 0" xyz="0.2 0.0 0.0" />
+      <material name="green">
+        <color rgba="0 0.8 0.0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint name="planar2dof/joint_striker_ee" type="fixed">
+      <axis xyz="1 0 0" />
+      <parent link="planar2dof/link_2" />
+      <child link="planar2dof/link_striker_ee" />
+      <origin xyz="0.4 0 0.0" />
+      <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <link name="planar2dof/link_striker_ee">
+    <inertial>
+      <origin rpy="0 1.570796326790 0" xyz="0.0 0.0 0.0" />
+      <mass value="0.1" />
+      <inertia ixx="0.00010" ixy="0.00000" ixz="0.00000" iyy="0.00010" iyz="0.00000" izz="0.00010" />
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <origin rpy="0.0 1.57079632679 0" xyz="0.0 0.0 0.0" />
+      <material name="grey">
+        <color rgba="0.8 0.8 .8 1" />
+      </material>
+    </visual>
+  </link>
+</robot>
