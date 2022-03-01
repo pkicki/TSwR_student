@@ -13,8 +13,8 @@ class MMAController(Controller):
         # TODO: Implement procedure of choosing the best fitting model from self.models (by setting self.i)
         pass
 
-    def calculate_control(self, x, desired_q_ddot):
-        v = desired_q_ddot  # TODO: Add Feedback
+    def calculate_control(self, x, q_r, q_r_dot, q_r_ddot):
+        v = q_r_ddot  # TODO: Add Feedback
         q_dot = x[2:, np.newaxis]
         M = self.models[self.i].M(x)
         return M @ (v + np.linalg.inv(M) @ self.models[self.i].C(x) @ q_dot)
