@@ -13,6 +13,8 @@ class PlanarManipulator2DOFPyBullet:
         self.client.loadURDF("./urdf/planar2dof.urdf", flags=pybullet.URDF_USE_IMPLICIT_CYLINDER | pybullet.URDF_USE_INERTIA_FROM_FILE)
         self.client.resetDebugVisualizerCamera(cameraDistance=2, cameraYaw=0.0, cameraPitch=-89.9,
                                                cameraTargetPosition=[0., 0., 0.])
+        for i in range(3):
+            self.client.changeDynamics(0, i, lateralFriction=0., linearDamping=0., angularDamping=0.)
         for j in range(self.client.getNumJoints(0)):
             self.client.setJointMotorControl2(0, j, pybullet.POSITION_CONTROL, force=0)
         for i in range(2):
