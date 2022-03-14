@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from numpy import pi
-from scipy.integrate import odeint
 
 from controllers.dummy_controller import DummyController
 from controllers.feedback_linearization_controller import FeedbackLinearizationController
-from manipulators.planar_2dof import PlanarManipulator2DOF
 from trajectory_generators.constant_torque import ConstantTorque
 from trajectory_generators.sinusonidal import Sinusoidal
 from trajectory_generators.poly3 import Poly3
@@ -14,8 +11,6 @@ from utils.simulation import simulate
 Tp = 0.01
 start = 0
 end = 3
-t = np.linspace(start, end, int((end - start) / Tp))
-manipulator = PlanarManipulator2DOF(Tp)
 
 """
 Switch to FeedbackLinearizationController as soon as you implement it
