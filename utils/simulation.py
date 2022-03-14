@@ -6,21 +6,21 @@ from manipulators.planar_2dof import PlanarManipulator2DOF
 from manipulators.planar_2dof_pybullet import PlanarManipulator2DOFPyBullet
 
 
-def simulate(mode, trajectory_generator, controller, Tp, T):
+def simulate(mode, trajectory_generator, controller, Tp, T, multimodel=False):
     assert mode in ["PYBULLET", "SCIPY"]
     timesteps = np.linspace(0., T, int(T / Tp))
     if mode == "PYBULLET":
-        return simulate_pybullet(trajectory_generator, controller, timesteps)
+        return simulate_pybullet(trajectory_generator, controller, timesteps, multimodel)
     elif mode == "SCIPY":
         return simulate_scipy(trajectory_generator, controller, timesteps)
 
 
-def simulate_pybullet(trajectory_generator, controller, timesteps):
+def simulate_pybullet(trajectory_generator, controller, timesteps, multimodel):
     ctrl = []
     Q = []
     Q_d = []
     q0, qdot0, _ = trajectory_generator.generate(0.)
-    manipulator = PlanarManipulator2DOFPyBullet(timesteps[1], q0, qdot0)
+    manipulator = PlanarManipulator2DOFPyBullet(timesteps[1], q0, qdot0, multimodel)
     for t in timesteps:
         x = np.array(manipulator.get_state())
         Q.append(copy(x))
