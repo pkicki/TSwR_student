@@ -4,74 +4,60 @@ from numpy import pi
 from scipy.integrate import odeint
 
 from controllers.adrc_controller import ADRController
-from controllers.dummy_controller import DummyController
-from controllers.feedback_linearization_controller import FeedbackLinearizationController
-from manipulators.planar_2dof import PlanarManipulator2DOF
-from observers.eso import ESO
+
 from trajectory_generators.constant_torque import ConstantTorque
 from trajectory_generators.sinusonidal import Sinusoidal
 from trajectory_generators.poly3 import Poly3
+from utils.simulation import simulate
 
 Tp = 0.001
-start = 0
-end = 3
-t = np.linspace(start, end, int((end - start) / Tp))
-manipulator = PlanarManipulator2DOF(Tp)
+end = 5
 
-b_est_1 = 10.
-b_est_2 = 10.
-kp_1 = 0.
-kp_2 = 0.
-kd_1 = 0.
-kd_2 = 0.
-fl_controller = ADRController(b_est_1, kp_1, kd_1)
-sl_controller = ADRController(b_est_2, kp_2, kd_2)
+# traj_gen = ConstantTorque(np.array([0., 1.0])[:, np.newaxis])
+traj_gen = Sinusoidal(np.array([0., 1.]), np.array([2., 2.]), np.array([0., 0.]))
+# traj_gen = Poly3(np.array([0., 0.]), np.array([pi/4, pi/6]), end)
 
-l1 = 0.
-l2 = 0.
-l3 = 0.
-A = np.array([[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]])  # TODO: Set matrix A also
-B1 = np.array([0., b_est_1, 0.])[:, np.newaxis]
-B2 = np.array([0., b_est_2, 0.])[:, np.newaxis]
-L1 = np.array([l1, l2, l3])[:, np.newaxis]
-L2 = np.array([l1, l2, l3])[:, np.newaxis]
-first_link_state_estimator = ESO(A, B1, L1)
-second_link_state_estimator = ESO(A, B2, L2)
+b_est_1 = None
+b_est_2 = None
+kp_est_1 = None
+kp_est_2 = None
+kd_est_1 = None
+kd_est_2 = None
+p1 = None
+p2 = None
 
-traj_gen = Poly3(np.array([0., 0.]), np.array([pi/4, pi/6]), end)
+q0, qdot0, _ = traj_gen.generate(0.)
+q1_0 = np.array([q0[0], qdot0[0]])
+q2_0 = np.array([q0[1], qdot0[1]])
+controller = ADRController(Tp, params=[[b_est_1, kp_est_1, kd_est_1, p1, q1_0],
+                                       [b_est_2, kp_est_2, kd_est_2, p2, q2_0]])
 
+Q, Q_d, u, T = simulate("PYBULLET", traj_gen, controller, Tp, end)
 
-ctrl = []
-T = []
-Q_d = []
+eso1 = np.array(controller.joint_controllers[0].eso.states)
+eso2 = np.array(controller.joint_controllers[1].eso.states)
 
+plt.subplot(221)
+plt.plot(T, eso1[:, 0])
+plt.plot(T, Q[:, 0], 'r')
+plt.subplot(222)
+plt.plot(T, eso1[:, 1])
+plt.plot(T, Q[:, 2], 'r')
+plt.subplot(223)
+plt.plot(T, eso2[:, 0])
+plt.plot(T, Q[:, 1], 'r')
+plt.subplot(224)
+plt.plot(T, eso2[:, 1])
+plt.plot(T, Q[:, 3], 'r')
+plt.show()
 
-def system(x_and_eso, t):
-    x = x_and_eso[:4]
-    fl_estimates = x_and_eso[4:7]
-    sl_estimates = x_and_eso[7:]
-    T.append(t)
-    q_d, q_d_dot, q_d_ddot = traj_gen.generate(t)
-    Q_d.append(q_d)
-    u1 = fl_controller.calculate_control(x[0], q_d[0], q_d_dot[0], q_d_ddot[0], fl_estimates)
-    u2 = sl_controller.calculate_control(x[1], q_d[1], q_d_dot[1], q_d_ddot[1], sl_estimates)
-    control = np.stack([u1, u2])[:, np.newaxis]
-    ctrl.append(control)
-    fl_eso_dot = first_link_state_estimator.compute_dot(fl_estimates, x[0], u1)
-    sl_eso_dot = second_link_state_estimator.compute_dot(sl_estimates, x[1], u2)
-    x_dot = manipulator.x_dot(x, control)
-    x_and_eso_dot = np.concatenate([x_dot, fl_eso_dot, sl_eso_dot])
-    return x_and_eso_dot[:, 0]
-
-
-q_d, q_d_dot, q_d_ddot = traj_gen.generate(0.)
-x = odeint(system, [*q_d, *q_d_dot, 0., 0., 0., 0., 0., 0.], t, hmax=1e-3)
-manipulator.plot(x[:, :4])
-
-"""
-You can add here some plots of the state 'x' (consists of q and q_dot), controls 'ctrl', desired trajectory 'Q_d'
-with respect to time 'T' to analyze what is going on in the system
-"""
-plt.plot(t, x[:, 1], 'r')
-plt.plot(T, np.stack(Q_d, 0)[:, 1], 'b')
+plt.subplot(221)
+plt.plot(T, Q[:, 0], 'r')
+plt.plot(T, Q_d[:, 0], 'b')
+plt.subplot(222)
+plt.plot(T, Q[:, 1], 'r')
+plt.plot(T, Q_d[:, 1], 'b')
+plt.subplot(223)
+plt.plot(T, u[:, 0], 'r')
+plt.plot(T, u[:, 1], 'b')
 plt.show()
