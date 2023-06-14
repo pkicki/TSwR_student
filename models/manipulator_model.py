@@ -2,7 +2,7 @@ import numpy as np
 
 
 class ManiuplatorModel:
-    def __init__(self, Tp):
+    def __init__(self, Tp, m3_a, r3_a):
         self.Tp = Tp
         self.l1 = 0.5
         self.r1 = 0.01
@@ -12,8 +12,8 @@ class ManiuplatorModel:
         self.m2 = 1.
         self.I_1 = 1 / 12 * self.m1 * (3 * self.r1 ** 2 + self.l1 ** 2)
         self.I_2 = 1 / 12 * self.m2 * (3 * self.r2 ** 2 + self.l2 ** 2)
-        self.m3 = 0.0
-        self.r3 = 0.01
+        self.m3 = m3_a
+        self.r3 = r3_a
         self.I_3 = 2. / 5 * self.m3 * self.r3 ** 2
         
         self.d1 = self.l1 / 2
@@ -50,3 +50,14 @@ class ManiuplatorModel:
         C = np.array([[ - self.beta * np.sin(q2) * q2_dot,  - self.beta * np.sin(q2) * (q1_dot + q2_dot)], 
                       [self.beta * np.sin(q2) * q1_dot, 0]])
         return C
+
+    def x_dot(self, x, u):
+        # M * q_dot_dot + C * q_dot = u
+        # q_dot_dot = M_inv * (u - C * q_dot)
+        
+        q_dot = x[2:]
+        M_inv = np.linalg.inv(self.M(x))
+        
+        return M_inv @ (u - self.C(x) @ q_dot)
+            
+        

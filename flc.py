@@ -15,7 +15,7 @@ end = 3
 """
 Switch to FeedbackLinearizationController as soon as you implement it
 """
-controller = FeedbackLinearizationController(Tp)
+controller = FeedbackLinearizationController(Tp, m3=0.0, r3=0.1)
 #controller = DummyController(Tp)
 
 """
@@ -37,10 +37,13 @@ with respect to time 'T' to analyze what is going on in the system
 plt.subplot(221)
 plt.plot(T, Q[:, 0], 'r')
 plt.plot(T, Q_d[:, 0], 'b')
+plt.legend(['q1', 'q1_d'])
 plt.subplot(222)
 plt.plot(T, Q[:, 1], 'r')
 plt.plot(T, Q_d[:, 1], 'b')
+plt.legend(['q2', 'q2_d'])
 plt.subplot(223)
 plt.plot(T, u[:, 0], 'r')
 plt.plot(T, u[:, 1], 'b')
+plt.legend(['u1', 'u2'])
 plt.show()
