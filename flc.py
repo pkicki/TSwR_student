@@ -15,7 +15,7 @@ end = 3
 """
 Switch to FeedbackLinearizationController as soon as you implement it
 """
-controller = FeedbackLinearizationController(Tp, m3=0.0, r3=0.1)
+controller = FeedbackLinearizationController(Tp, m3=5.6)
 #controller = DummyController(Tp)
 
 """
@@ -38,12 +38,15 @@ plt.subplot(221)
 plt.plot(T, Q[:, 0], 'r')
 plt.plot(T, Q_d[:, 0], 'b')
 plt.legend(['q1', 'q1_d'])
+plt.grid()
 plt.subplot(222)
 plt.plot(T, Q[:, 1], 'r')
 plt.plot(T, Q_d[:, 1], 'b')
 plt.legend(['q2', 'q2_d'])
+plt.grid()
 plt.subplot(223)
 plt.plot(T, u[:, 0], 'r')
 plt.plot(T, u[:, 1], 'b')
+plt.grid()
 plt.legend(['u1', 'u2'])
 plt.show()
