@@ -3,6 +3,7 @@ from observers.eso import ESO
 from .controller import Controller
 
 
+
 class ADRCJointController(Controller):
     def __init__(self, b, kp, kd, p, q0, Tp):
         self.b = b
@@ -20,7 +21,8 @@ class ADRCJointController(Controller):
         
 
     def set_b(self, b):
-        ESO.set_B(b)
+        self.b = b
+        self.eso.set_B(np.array([[0], [b], [0]]))
 
     def psi(self, e : float, e_dot : float ):
         return self.kp * e + self.kd * e_dot
@@ -32,6 +34,6 @@ class ADRCJointController(Controller):
         e = q_d - q
         e_dot = q_d_dot - self.eso.get_q_dot_hat()
         u = (self.psi(e, e_dot) - self.eso.get_F_hat()) / self.b
-        u = np.clip(u, -5, 5)
+        u = np.clip(u, -10, 10)
         self.eso.update(q, u)
         return u
