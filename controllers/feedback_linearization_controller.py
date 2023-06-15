@@ -18,7 +18,7 @@ class FeedbackLinearizationController(Controller):
         
         q = np.array([q1, q2]).transpose()
         q_dot = np.array([q1_dot, q2_dot]).transpose()
-        
+    
         v = q_r_ddot.transpose() + Kd * (q_r_dot.transpose() - q_dot) + Kp * (q_r.transpose()- q)
         
         tau = self.model.M(x) @ v + self.model.C(x) @ q_dot
