@@ -15,9 +15,26 @@ class ESO:
     def set_B(self, B):
         self.B = B
 
-    def update(self, q, u):
+    def update(self, q : float, u : float):
         self.states.append(copy(self.state))
-        ### TODO implement ESO update
+        q_hat = self.state[0]
+        factor = ((np.eye(3) + self.Tp *  self.A) @ self.state)
+        factor_2 = self.Tp * self.B * u + self.Tp * self.L * (q - q_hat)
+        factor_2 = factor_2.reshape((3,))
+
+        self.state = factor + factor_2
+        print(f'{factor=}')
+        print(f'{factor_2=}')
+        print(f'{self.state=}')
 
     def get_state(self):
         return self.state
+
+    def get_q_dot_hat(self):
+        return self.state[1]
+    
+    def get_q_hat(self):
+        return self.state[0]
+    
+    def get_F_hat(self):
+        return self.state[2]

@@ -17,8 +17,8 @@ class MMAController(Controller):
         self.i = 0
         self.u = np.array([0, 0]).transpose()
         self.last_x = None
-        self.Kp = 2.0
-        self.Kd = 1.0
+        self.Kp = 4.0
+        self.Kd = 2.0
 
     def choose_model(self, x):
         # TODO: Implement procedure of choosing the best fitting model from self.models (by setting self.i)
@@ -36,7 +36,7 @@ class MMAController(Controller):
             e_list.append(e)            
         
         self.i = np.argmin(e_list)
-        # print(self.i)
+        print(self.i)
         pass
 
     def calculate_control(self, x, q_r, q_r_dot, q_r_ddot):
