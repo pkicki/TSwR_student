@@ -33,7 +33,7 @@ class ADRCJointController(Controller):
         q, q_dot = x
         e = q_d - q
         e_dot = q_d_dot - self.eso.get_q_dot_hat()
-        u = (self.psi(e, e_dot) - self.eso.get_F_hat()) / self.b
+        u = (q_d_ddot + self.psi(e, e_dot) - self.eso.get_F_hat()) / self.b 
         u = np.clip(u, -10, 10)
         self.eso.update(q, u)
         return u
